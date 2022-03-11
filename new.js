@@ -21,32 +21,10 @@ Sa durée
 Le pays d’origine
 Le résultat au Box Office
 Le résumé du film*/
-/*
-var get = function (url, success, error) {
-        var xhr = new window.XMLHttpRequest()
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                success(xhr.responseText)
-            }else{
-                error(xhr)
-            }
-        }
-        xhr.open('GET', url, true)
-        xhr.send()
-
-}
-get('http://localhost:8000/api/v1/genre/', function(response){
-    console.log(response)
-    console.log("ok")
-}, function(error){
-    console.log(error)
-})
-console.log("ok")*/
 
 const getOcMovies = async function () {
     try {
-        let response = await fetch('http://localhost:8000/api/v1/titles/')
+        let response = await fetch('http://localhost:8000/api/v1/')
         if (response.ok) {
             let data = await response.json()
             console.log(data)
@@ -60,3 +38,53 @@ const getOcMovies = async function () {
 
 getOcMovies()
 
+function TopRatedFilms() {
+    fetch('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score')
+        .then(function(res) {
+            if (res.ok) {
+                return res.json();
+            }
+        })
+        .then(function(value) {
+            console.log(value);
+        })
+        .catch(function(err) {
+            console.error('retour serveur : ', response.status)
+        })
+}
+TopRatedFilms()
+
+function ActionCategory() {
+    fetch('http://localhost:8000/api/v1/titles/?name=&_contains=Action&genre_contains')
+        .then(function(res) {
+            if (res.ok) {
+                return res.json();
+            }
+        })
+        .then(function(value) {
+            document
+                .getElementById(ActionCategory)
+                .innerText = value.queryString.greetings;
+                console.log(value);
+        })
+        .catch(function(err) {
+            console.error('retour serveur : ', response.status)
+        })
+}
+ActionCategory()
+
+function ComedyCategory() {
+    fetch('http://localhost:8000/api/v1/titles/?name=&name_contains=Comedy&genre_contains')
+        .then(function(res) {
+            if (res.ok) {
+                return res.json();
+            }
+        })
+        .then(function(value) {
+            console.log(value);
+        })
+        .catch(function(err) {
+            console.error('retour serveur : ', response.status)
+        })
+}
+ComedyCategory()
