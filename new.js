@@ -24,7 +24,7 @@ Le résumé du film*/
 
 const getOcMovies = async function () {
     try {
-        let response = await fetch('http://localhost:8000/api/v1/')
+        let response = await fetch('http://localhost:8000/api/v1/titles')
         if (response.ok) {
             let data = await response.json()
             console.log(data)
@@ -63,7 +63,7 @@ function ActionCategory() {
         })
         .then(function(value) {
             document
-                .getElementById(ActionCategory)
+                .getElementsByClassName(Elements)
                 .innerText = value.queryString.greetings;
                 console.log(value);
         })
@@ -88,3 +88,89 @@ function ComedyCategory() {
         })
 }
 ComedyCategory()
+
+class carousel1 {
+
+    /**
+     @param {HTMLElement} element
+     @param {object} options
+     @param {object} options.slidesToScroll Nbre d'elements à faire defiler
+     @param {object} option.slidesVisible Elements visible dans un slide
+     */
+    constructor (element, option= {}) {
+        this.element = element
+        this.option = object.assign({}, {
+            slideToScroll: 1,
+            slideVisible: 1
+        }, option)
+        let children = [].slice.call(element.children)
+        this.currentItem = 0
+        this.root = this.createDivWithClass('carouselSci-Fi')
+        this.container = this.createDivWithClass('carouselSci-Fi_container')
+        root.appendChild(this.container)
+        this.element.appendChild(this.root)
+        this.items = children.map((child) => {
+            let item = this.createDivWithClass('carousel__item')
+            item.appendChild(child)
+            this.container.appendChild(item)
+            return item
+        })
+        this.setStyle()
+        this.createNavigation()
+    }
+
+    /*
+    *Applique les dimenssions au éléments du carousel
+     */
+    setStyle () {
+        let ratio = this.items.length / this.options.slidesVisible
+        this.container.style.width = (ratio * 100) + "%"
+        this.items.forEach(item => item.style.width = ((100 / this.options.slidesVisible) / ratio) + "%")
+    }
+
+    createNavigation () {
+        let nextButton = this.createDivWithClass('carousel__next')
+        let prevButton = this.createDivWithClass('carousel__prev')
+        this.root.appendChild(nextButton)
+        this.root.appendChild(prevButton)
+        nextButton.addEventListener('click', this.next.bind(this))
+        prevButton.addEventListener('click', this.prev.bind(this))
+    }
+
+    next () {
+        this.goToItem(this.currentItem + this.option.slidesToScroll)
+    }
+
+    prev () {
+        this.goToItem(this.currentItem - this.option.slidesToScroll)
+    }
+
+    /*
+    *déplacement ciblé des elements du caroousel
+    * @param {number} index
+     */
+    goToItem (index) {
+        this.currentItem = index
+    }
+
+
+    /*
+    * @param {string} className
+    * @returns {HTMLElement}
+     */
+    createDivWithClass (className) {
+        let div = document.createElement("div")
+        div.setAttribute('class', className)
+        return div
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    carouselSF(document.querySelector("#carouselSci-Fi"), {
+        slidesToScroll: 5,
+        slideVisible: 5
+    })
+})
+
+fetch()

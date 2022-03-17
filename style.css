@@ -101,7 +101,7 @@ nav ul
 
 nav li
 {
-    margin-right: 15px;
+    margin-right: 2%;
 }
 nav a
 {
@@ -114,4 +114,22 @@ nav a:hover
 {
     color: white;
     border-bottom: 3px solid white;
+}
+
+/**
+CAROUSEL
+ */
+.carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel__container::after {
+    content:'';
+    clear: both;
+    display: table;
+}
+
+.carousel__item {
+    float: left;
 }
