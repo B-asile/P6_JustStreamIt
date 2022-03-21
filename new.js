@@ -62,10 +62,7 @@ function ActionCategory() {
             }
         })
         .then(function(value) {
-            document
-                .getElementsByClassName(Elements)
-                .innerText = value.queryString.greetings;
-                console.log(value);
+            console.log(value)
         })
         .catch(function(err) {
             console.error('retour serveur : ', response.status)
@@ -89,88 +86,69 @@ function ComedyCategory() {
 }
 ComedyCategory()
 
-class carousel1 {
-
-    /**
-     @param {HTMLElement} element
-     @param {object} options
-     @param {object} options.slidesToScroll Nbre d'elements à faire defiler
-     @param {object} option.slidesVisible Elements visible dans un slide
-     */
-    constructor (element, option= {}) {
-        this.element = element
-        this.option = object.assign({}, {
-            slideToScroll: 1,
-            slideVisible: 1
-        }, option)
-        let children = [].slice.call(element.children)
-        this.currentItem = 0
-        this.root = this.createDivWithClass('carouselSci-Fi')
-        this.container = this.createDivWithClass('carouselSci-Fi_container')
-        root.appendChild(this.container)
-        this.element.appendChild(this.root)
-        this.items = children.map((child) => {
-            let item = this.createDivWithClass('carousel__item')
-            item.appendChild(child)
-            this.container.appendChild(item)
-            return item
+function Sci_FiCategory() {
+    fetch('http://localhost:8000/api/v1/titles/?name=&name_contains=Sci-Fi&genre_contains')
+        .then(function(res) {
+            if (res.ok) {
+                return res.json();
+            }
         })
-        this.setStyle()
-        this.createNavigation()
-    }
-
-    /*
-    *Applique les dimenssions au éléments du carousel
-     */
-    setStyle () {
-        let ratio = this.items.length / this.options.slidesVisible
-        this.container.style.width = (ratio * 100) + "%"
-        this.items.forEach(item => item.style.width = ((100 / this.options.slidesVisible) / ratio) + "%")
-    }
-
-    createNavigation () {
-        let nextButton = this.createDivWithClass('carousel__next')
-        let prevButton = this.createDivWithClass('carousel__prev')
-        this.root.appendChild(nextButton)
-        this.root.appendChild(prevButton)
-        nextButton.addEventListener('click', this.next.bind(this))
-        prevButton.addEventListener('click', this.prev.bind(this))
-    }
-
-    next () {
-        this.goToItem(this.currentItem + this.option.slidesToScroll)
-    }
-
-    prev () {
-        this.goToItem(this.currentItem - this.option.slidesToScroll)
-    }
-
-    /*
-    *déplacement ciblé des elements du caroousel
-    * @param {number} index
-     */
-    goToItem (index) {
-        this.currentItem = index
-    }
+        .then(function(value) {
+            console.log(value);
+        })
+        .catch(function(err) {
+            console.error('retour serveur : ', response.status)
+        })
+}
+Sci_FiCategory()
 
 
-    /*
-    * @param {string} className
-    * @returns {HTMLElement}
-     */
-    createDivWithClass (className) {
-        let div = document.createElement("div")
-        div.setAttribute('class', className)
-        return div
-    }
+/*function Top_Rated_Films () {
+    let Top_Rated_Films = document.querySelector("#TopRatedFilms div")
+    console.log(Top_Rated_Films)
+    let createImg = document.createElement("img")
+    createImg.setAttribute('src', "https://m.media-amazon.com/images/M/MV5BNDEyYTA5OWEtYjNiYS00MGZlLThjYzEtMTc1Zjk2NDRmZmYxXkEyXkFqcGdeQXVyNzIwNTQyMw@@._V1_UY268_CR1,0,182,268_AL_.jpg")
+    console.log(createImg)
+    Top_Rated_Films[0].append(createImg)
+}
+Top_Rated_Films()*/
+
+
+function SFcategory () {
+    let SFcategory = document.getElementsByClassName('Sci_Fi_element')
+    console.log(SFcategory[0])
+
+    //créer bloque image
+    let createImg = document.createElement("img")
+    console.log(createImg)
+    createImg.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNTY4ZDk5MzYtNjk2Zi00ZWY3LTgwZjUtNDc5MWEzMWFlOTQzXkEyXkFqcGdeQXVyNjU1MTEwMjI@._V1_UY268_CR1,0,182,268_AL_.jpg")
+    console.log(createImg)
+    SFcategory[0].append(createImg)
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+SFcategory ()
 
-    carouselSF(document.querySelector("#carouselSci-Fi"), {
-        slidesToScroll: 5,
-        slideVisible: 5
-    })
-})
+//récup les infos API depuis URL en paramètre
+function SF_movie (url)  {
+    let SF_movie = document.getElementsByClassName('SF_element')
+    console.log(SF_movie[0])
+    let getMovie = document.createElement("url")
+    getMovie.setAttribute("url", "http://localhost:8000/api/v1/titles/574")
+    console.log(getMovie)
+    SF_movie[0].append(getMovie)
+}
+SF_movie()
 
-fetch()
+//créer virtuellement le html pour afficher un film, +renvoie avec return
+function createHTMLMovie (movie) {
+    let newDiv = document.createElement("div", "carousel__panorama");
+    console.log(newDiv)
+    newDiv.setAttribute("Sci_Fi_element", "Element6");
+    return newDiv
+}
+createHTMLMovie ()
+
+// reçoit un element
+function addInHTML () {
+
+}
