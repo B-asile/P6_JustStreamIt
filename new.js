@@ -38,6 +38,25 @@ const getOcMovies = async function () {
 
 getOcMovies()
 
+function bestMovie() {
+    fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
+        .then(response => {
+            if(response.ok){
+                response.json().then(data => {
+                    const imgBestMovie = document.getElementsByClassName("imgBestMovie");
+                    console.log(imgBestMovie)
+                    let addImg = document.createElement("img");
+                    console.log(data)
+                    addImg.src = data.results[0].image_url
+                    imgBestMovie[0].append(addImg)
+                })
+            }else {
+                console.log("erreur");
+            }
+        })
+}
+bestMovie()
+
 function TopRatedFilms() {
     fetch('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score')
         .then(function(res) {
@@ -45,8 +64,13 @@ function TopRatedFilms() {
                 return res.json();
             }
         })
-        .then(function(value) {
-            console.log(value);
+        .then(function(data) {
+            const imgTopRatedFilms = document.getElementById("slider");
+                data.results.forEach(elt => {
+                    let addImg = document.createElement("img");
+                    addImg.src = elt.image_url
+                    imgTopRatedFilms.append(addImg)
+                })
         })
         .catch(function(err) {
             console.error('retour serveur : ', response.status)
@@ -61,8 +85,13 @@ function ActionCategory() {
                 return res.json();
             }
         })
-        .then(function(value) {
-            console.log(value)
+        .then(function(data) {
+            const imgActionCategory = document.getElementById("ActionCategory");
+                data.results.forEach(elt => {
+                    let addImg = document.createElement("img");
+                    addImg.src = elt.image_url
+                    imgActionCategory.append(addImg)
+                })
         })
         .catch(function(err) {
             console.error('retour serveur : ', response.status)
@@ -77,8 +106,13 @@ function ComedyCategory() {
                 return res.json();
             }
         })
-        .then(function(value) {
-            console.log(value);
+        .then(function(data) {
+            const imgComedyCategory = document.getElementById("ComedyCategory");
+            data.results.forEach(elt => {
+                let addImg = document.createElement("img");
+                addImg.src = elt.img_url
+                imgComedyCategory.append(addImg)
+            })
         })
         .catch(function(err) {
             console.error('retour serveur : ', response.status)
@@ -93,8 +127,13 @@ function Sci_FiCategory() {
                 return res.json();
             }
         })
-        .then(function(value) {
-            console.log(value);
+        .then(function(data) {
+            const imgSci_FiCategory = document.getElementById("SF_Category");
+            data.results.forEach(elt => {
+                let addImg = document.createElement("img");
+                addImg.src = elt.img_url
+                imgSci_FiCategory.append(addImg)
+            })
         })
         .catch(function(err) {
             console.error('retour serveur : ', response.status)
@@ -103,52 +142,71 @@ function Sci_FiCategory() {
 Sci_FiCategory()
 
 
+
 /*function Top_Rated_Films () {
-    let Top_Rated_Films = document.querySelector("#TopRatedFilms div")
-    console.log(Top_Rated_Films)
-    let createImg = document.createElement("img")
-    createImg.setAttribute('src', "https://m.media-amazon.com/images/M/MV5BNDEyYTA5OWEtYjNiYS00MGZlLThjYzEtMTc1Zjk2NDRmZmYxXkEyXkFqcGdeQXVyNzIwNTQyMw@@._V1_UY268_CR1,0,182,268_AL_.jpg")
-    console.log(createImg)
-    Top_Rated_Films[0].append(createImg)
+    const newElt = document.createElement("div");
+    let elt = document.getElementById("carousel1");
+
+    elt.appendChild(newElt);
+    console.log(newElt);
+
+    let addInDiv = document.createElement("img");
+    addInDiv.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNjA5Y2ZhYzctNDc1Yy00OGViLWI3NGUtOTYwZmE3NDFiYmIxXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_UY268_CR72,0,182,268_AL_.jpg");
+    newElt.append(addInDiv);
+    console.log(addInDiv);
 }
 Top_Rated_Films()*/
 
 
-function SFcategory () {
-    let SFcategory = document.getElementsByClassName('Sci_Fi_element')
-    console.log(SFcategory[0])
+
+/*function SfCategory (url) {
+    let SfCategory = document.getElementsByClassName('Sci_Fi_element')
+    console.log(SfCategory[0])
+    console.log(SfCategory[1])
 
     //créer bloque image
     let createImg = document.createElement("img")
     console.log(createImg)
-    createImg.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNTY4ZDk5MzYtNjk2Zi00ZWY3LTgwZjUtNDc5MWEzMWFlOTQzXkEyXkFqcGdeQXVyNjU1MTEwMjI@._V1_UY268_CR1,0,182,268_AL_.jpg")
+    createImg.setAttribute("src", url)
     console.log(createImg)
-    SFcategory[0].append(createImg)
+    SfCategory[0].append(createImg)
 }
 
-SFcategory ()
+SfCategory ("https://m.media-amazon.com/images/M/MV5BNTY4ZDk5MzYtNjk2Zi00ZWY3LTgwZjUtNDc5MWEzMWFlOTQzXkEyXkFqcGdeQXVyNjU1MTEwMjI@._V1_UY268_CR1,0,182,268_AL_.jpg")
 
 //récup les infos API depuis URL en paramètre
 function SF_movie (url)  {
-    let SF_movie = document.getElementsByClassName('SF_element')
+    let SF_movie = document.getElementsByClassName('Sci_Fi_element', 'Element1')
     console.log(SF_movie[0])
     let getMovie = document.createElement("url")
-    getMovie.setAttribute("url", "http://localhost:8000/api/v1/titles/574")
+    getMovie.setAttribute("url", "http://localhost:8000/api/v1/titles/574" )
     console.log(getMovie)
     SF_movie[0].append(getMovie)
 }
-SF_movie()
+SF_movie("http://localhost:8000/api/v1/titles/574")
 
 //créer virtuellement le html pour afficher un film, +renvoie avec return
-function createHTMLMovie (movie) {
-    let newDiv = document.createElement("div", "carousel__panorama");
-    console.log(newDiv)
-    newDiv.setAttribute("Sci_Fi_element", "Element6");
-    return newDiv
+function createHTMLMovie () {
+    const newDiv = document.createElement("div");
+    newDiv.setAttribute("class","Sci_Fi_element");
+    console.log(newDiv.outerHTML)
+    let addNewDiv = document.getElementsByClassName("carousel__panorama");
+    console.log(addNewDiv)
+    addNewDiv[0].appendChild(newDiv);
 }
 createHTMLMovie ()
 
 // reçoit un element
-function addInHTML () {
 
-}
+function addInHTML () {
+    let addInHTML = document.getElementsByClassName('Sci_Fi_element')
+    console.log(addInHTML)
+    let createImg5 = document.createElement("img");
+    createImg5.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNjU1NDMyNGEtODJkYy00M2Y4LTk5YzItYTYxMzkzZWI1MmJiXkEyXkFqcGdeQXVyMzI5NDcxNzI@._V1_UY268_CR5,0,182,268_AL_.jpg");
+    addInHTML[4].appendChild(createImg5);*/
+
+    //let addInHTML = document.getElementsByClassName("carousel__panorama");
+    //let createImg5 = document.createElement("img");
+    //createImg5.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNjU1NDMyNGEtODJkYy00M2Y4LTk5YzItYTYxMzkzZWI1MmJiXkEyXkFqcGdeQXVyMzI5NDcxNzI@._V1_UY268_CR5,0,182,268_AL_.jpg");
+    //addInHTML[5].append(createImg5)
+
