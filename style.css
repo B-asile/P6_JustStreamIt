@@ -1,7 +1,12 @@
 body
 {
     background-color: black;
-    font-family: Impact, sans-serif;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 #bloc_page
@@ -40,8 +45,8 @@ header
 
 #logo img
 {
-    width: 63px;
-    height: 69px;
+    width: 63%;
+    height: 69%;
 }
 
 header h1
@@ -53,10 +58,7 @@ header h1
     margin: 0 0 0 20px;
 }
 
-balise
-{
-    font-family: Impact, sans-serif;
-}
+
 h1
 {
     font-family: Impact, sans-serif;
@@ -64,72 +66,117 @@ h1
     color: orangered;
     text-align: justify;
 }
-#conteneur1
-{
-    display: flex;
-    justify-content: space-around;
-    border: 3px orangered groove;
-}
-figure
-{
-    border: 3px orangered groove;
-}
-#conteneur2
-{
-    display: flex;
-    justify-content: space-around;
-    border: 3px orangered groove;
-}
-#conteneur3
-{
-    display: flex;
-    justify-content: space-around;
-    border: 3px orangered groove;
-}
-#conteneur4
-{
-    display: flex;
-    justify-content: space-around;
-    border: 3px orangered groove;
-}
-/* Navigation */
-nav ul
-{
-    list-style-type: none;
-    display: flex;
-}
 
-nav li
-{
-    margin-right: 2%;
-}
-nav a
-{
-    font-family: Impact, sans-serif;
-    font-weight: normal;
-    text-transform: uppercase;
-    color: white;
-}
-nav a:hover
-{
-    color: white;
-    border-bottom: 3px solid white;
-}
-
-/**
-CAROUSEL
- */
-.carousel {
+section .carousel1 {
+    height: 250px;
+    width: 80%;
     position: relative;
-    overflow: hidden;
 }
 
-.carousel__container::after {
-    content:'';
-    clear: both;
-    display: table;
+section .carousel1 .switchLeft,
+#carousel1 .switchRight {
+    color: white;
+    font-weight: bold;
+    height: 100%;
+    width: 45px;
+    line-height: 250px;
+    font-size: 25px;
+    text-align: center;
+    background-color: lightgreen;
+    font-family: sans-serif;
+    top: 0;
+    z-index: 3;
 }
 
-.carousel__item {
-    float: left;
+section .carousel1 .switchLeft {
+    position: absolute;
+    left: -50px;
+}
+
+section .carousel1 .switchRight {
+    position: absolute;
+    right: -50px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+}
+
+.container {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.slider {
+  display: flex;
+  flex: 1 1 500px;
+  list-style: none;
+  padding: 0;
+  margin: 0 10px;
+}
+
+.item {
+  flex: 0 0 150px;
+  height: 215px;
+  margin-left: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+
+  $numBoxes: 20;
+  $step: 360 / $numBoxes;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  @for $i from 1 through $numBoxes {
+    &:nth-child(#{$i}) {
+      background: hsla($i * $step, 90%, 60%, 1);
+      z-index: $numBoxes - $i + 1;
+    }
+  }
+
+  a {
+    flex: 1;
+  }
+}
+
+.controls {
+  margin-top: 20px;
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    border: none;
+    border-radius: 25px;
+    background: hsla(0, 90%, 65%, 1);
+    padding: 12px 15px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 18px;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+}
+
+.progress-bar {
+  flex: 0 0 200px;
+  height: 4px;
+  border-radius: 4px;
+  margin: 0 20px;
+  background: hsla(0, 90%, 65%, 1);
+  transform: scaleX(0);
+  transform-origin: 0% 50%;
 }

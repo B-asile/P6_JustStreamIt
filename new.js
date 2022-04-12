@@ -22,7 +22,7 @@ Le pays d’origine
 Le résultat au Box Office
 Le résumé du film*/
 
-const getOcMovies = async function () {
+/*const getOcMovies = async function () {
     try {
         let response = await fetch('http://localhost:8000/api/v1/titles')
         if (response.ok) {
@@ -36,7 +36,7 @@ const getOcMovies = async function () {
     }
 }
 
-getOcMovies()
+getOcMovies()*/
 
 function bestMovie() {
     fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
@@ -65,7 +65,7 @@ function TopRatedFilms() {
             }
         })
         .then(function(data) {
-            const imgTopRatedFilms = document.getElementById("slider");
+            const imgTopRatedFilms = document.getElementById("topRatedFilms");
                 data.results.forEach(elt => {
                     let addImg = document.createElement("img");
                     addImg.src = elt.image_url
@@ -79,7 +79,7 @@ function TopRatedFilms() {
 TopRatedFilms()
 
 function ActionCategory() {
-    fetch('http://localhost:8000/api/v1/titles/?name=&_contains=Action&genre_contains')
+    fetch('http://localhost:8000/api/v1/titles/?genre=Action&genre_contains=&sort_by=-imdb_score')
         .then(function(res) {
             if (res.ok) {
                 return res.json();
@@ -100,7 +100,7 @@ function ActionCategory() {
 ActionCategory()
 
 function ComedyCategory() {
-    fetch('http://localhost:8000/api/v1/titles/?name=&name_contains=Comedy&genre_contains')
+    fetch('http://localhost:8000/api/v1/titles/?genre=Comedy&genre_contains=&sort_by=-imdb_score')
         .then(function(res) {
             if (res.ok) {
                 return res.json();
@@ -110,7 +110,7 @@ function ComedyCategory() {
             const imgComedyCategory = document.getElementById("ComedyCategory");
             data.results.forEach(elt => {
                 let addImg = document.createElement("img");
-                addImg.src = elt.img_url
+                addImg.src = elt.image_url
                 imgComedyCategory.append(addImg)
             })
         })
@@ -121,7 +121,7 @@ function ComedyCategory() {
 ComedyCategory()
 
 function Sci_FiCategory() {
-    fetch('http://localhost:8000/api/v1/titles/?name=&name_contains=Sci-Fi&genre_contains')
+    fetch('http://localhost:8000/api/v1/titles/?genre=Sci-Fi&genre_contains=&sort_by=-imdb_score')
         .then(function(res) {
             if (res.ok) {
                 return res.json();
@@ -131,7 +131,7 @@ function Sci_FiCategory() {
             const imgSci_FiCategory = document.getElementById("SF_Category");
             data.results.forEach(elt => {
                 let addImg = document.createElement("img");
-                addImg.src = elt.img_url
+                addImg.src = elt.image_url
                 imgSci_FiCategory.append(addImg)
             })
         })
