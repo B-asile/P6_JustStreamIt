@@ -22,21 +22,21 @@ Le pays d’origine
 Le résultat au Box Office
 Le résumé du film*/
 
-/*const getOcMovies = async function () {
-    try {
-        let response = await fetch('http://localhost:8000/api/v1/titles')
-        if (response.ok) {
-            let data = await response.json()
-            console.log(data)
-        } else {
-            console.error('Retour serveur : ', response.status)
-        }
-    } catch (e) {
-        console.log(e)
-    }
+function Movies () {
+    fetch("http://localhost:8000/api/v1/titles/?id")
+        .then(response => {
+            if(response.ok){
+                response.json().then(data => {
+                    moviesId = data.results.id
+                    console.log(moviesId)
+                })
+            }else {
+                console.log("erreur")
+            }
+        })
 }
 
-getOcMovies()*/
+Movies()
 
 function bestMovie() {
     fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
@@ -48,7 +48,7 @@ function bestMovie() {
                     let addImg = document.createElement("img");
                     console.log(data)
                     addImg.src = data.results[0].image_url
-                    imgBestMovie[0].append(addImg)
+                    imgBestMovie[0].append(addImg);
                 })
             }else {
                 console.log("erreur");
@@ -132,8 +132,15 @@ function Sci_FiCategory() {
             data.results.forEach(elt => {
                 let addImg = document.createElement("img");
                 addImg.src = elt.image_url
+                showinfos(addImg, elt)
+                console.log("rte")
                 imgSci_FiCategory.append(addImg)
             })
+            //fetch avec base url + idFilm
+            //data.results.forEach(id => {
+                //getMovieId = id.id
+                //getMovieInfos = showinfos('http://localhost:8000/api/v1/titles').join(${data.results.id});
+            //})
         })
         .catch(function(err) {
             console.error('retour serveur : ', response.status)
@@ -141,8 +148,56 @@ function Sci_FiCategory() {
 }
 Sci_FiCategory()
 
+function showinfos(selectedImg, data) {
+    const modal = document.getElementById("myModal");
+    console.log("ui")
+    console.log(selectedImg)
+    //selectedImg.addEventListener("click", function(event) {
+    selectedImg.onclick = function(){
+        //event.preventDefault()
+        modal.style.display = "block"
+        /*modal.innerHTML = `<h2 style="text-align: center">${data.title}</h2>
+                           <p><strong>Genre: </strong>${data.gender}</p>
+                           <p><strong>Date de sortie: </strong>${data.date_published}</p>
+                           <p><strong>Note utilisateurs: </strong>${data.imdb_score}</p>
+                           <p><strong>Réalisateur: </strong>${data.writers}</p>
+                           <p><strong>acteurs: </strong>${data.actors}</p>
+                           <p><strong>synopsis: </strong>${data.actors}</p>`*/
+        modal.innerHTML = "bonjour"
+    }
+    let span = document.getElementsByClassName("close")[0];
+    span.oneClick = function() {
+            modal.style.display = "none"
+        }
+    console.log("ER")
+}
 
 
+//const mainUrlMovies ('http://localhost:8000/api/v1/titles')
+
+/*
+var pointerX = -1;
+var pointerY = -1;
+document.onmousemove = function(event) {
+	pointerX = event.pageX;
+	pointerY = event.pageY;
+}
+setInterval(pointerCheck, 1000);
+function pointerCheck() {
+	console.log('Cursor at: '+pointerX+', '+pointerY);
+}
+*/
+
+/*
+function mouseShowTitle() {
+    const moviesTitle = document.getElementsByTagName("img");
+    data.results.forEach(elt => {
+        ("img").moviesTitle.mousemove(function (event) {
+            let addTitle = document.createElement("title")
+        });
+    })
+}
+*/
 /*function Top_Rated_Films () {
     const newElt = document.createElement("div");
     let elt = document.getElementById("carousel1");
@@ -209,4 +264,3 @@ function addInHTML () {
     //let createImg5 = document.createElement("img");
     //createImg5.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNjU1NDMyNGEtODJkYy00M2Y4LTk5YzItYTYxMzkzZWI1MmJiXkEyXkFqcGdeQXVyMzI5NDcxNzI@._V1_UY268_CR5,0,182,268_AL_.jpg");
     //addInHTML[5].append(createImg5)
-
