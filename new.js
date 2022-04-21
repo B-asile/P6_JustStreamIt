@@ -22,7 +22,7 @@ Le pays d’origine
 Le résultat au Box Office
 Le résumé du film*/
 
-function Movies () {
+/*function Movies () {
     fetch("http://localhost:8000/api/v1/titles/?id")
         .then(response => {
             if(response.ok){
@@ -36,7 +36,7 @@ function Movies () {
         })
 }
 
-Movies()
+Movies()*/
 
 function bestMovie() {
     fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
@@ -129,18 +129,13 @@ function Sci_FiCategory() {
         })
         .then(function(data) {
             const imgSci_FiCategory = document.getElementById("SF_Category");
-            data.results.forEach(elt => {
+            data.results.forEach(eltsImg => {
                 let addImg = document.createElement("img");
-                addImg.src = elt.image_url
-                showinfos(addImg, elt)
+                addImg.src = eltsImg.image_url
+                showInfos(addImg, eltsImg)
                 console.log("rte")
                 imgSci_FiCategory.append(addImg)
             })
-            //fetch avec base url + idFilm
-            //data.results.forEach(id => {
-                //getMovieId = id.id
-                //getMovieInfos = showinfos('http://localhost:8000/api/v1/titles').join(${data.results.id});
-            //})
         })
         .catch(function(err) {
             console.error('retour serveur : ', response.status)
@@ -148,21 +143,20 @@ function Sci_FiCategory() {
 }
 Sci_FiCategory()
 
-function showinfos(selectedImg, data) {
+function showInfos(addImg, eltsImg) {
     const modal = document.getElementById("myModal");
-    console.log("ui")
-    console.log(selectedImg)
+    console.log(addImg)
     //selectedImg.addEventListener("click", function(event) {
-    selectedImg.onclick = function(){
+    addImg.onclick = function(){
         //event.preventDefault()
         modal.style.display = "block"
-        /*modal.innerHTML = `<h2 style="text-align: center">${data.title}</h2>
-                           <p><strong>Genre: </strong>${data.gender}</p>
-                           <p><strong>Date de sortie: </strong>${data.date_published}</p>
-                           <p><strong>Note utilisateurs: </strong>${data.imdb_score}</p>
-                           <p><strong>Réalisateur: </strong>${data.writers}</p>
-                           <p><strong>acteurs: </strong>${data.actors}</p>
-                           <p><strong>synopsis: </strong>${data.actors}</p>`*/
+        modal.innerHTML = `<h2 style="text-align: center">${eltsImg.title}</h2>
+                           <p><strong>Genre: </strong>${eltsImg.gender}</p>
+                           <p><strong>Date de sortie: </strong>${eltsImg.date_published}</p>
+                           <p><strong>Note utilisateurs: </strong>${eltsImg.imdb_score}</p>
+                           <p><strong>Réalisateur: </strong>${eltsImg.writers}</p>
+                           <p><strong>acteurs: </strong>${eltsImg.actors}</p>
+                           <p><strong>synopsis: </strong>${eltsImg.actors}</p>`
         modal.innerHTML = "bonjour"
     }
     let span = document.getElementsByClassName("close")[0];
@@ -172,21 +166,25 @@ function showinfos(selectedImg, data) {
     console.log("ER")
 }
 
-
-//const mainUrlMovies ('http://localhost:8000/api/v1/titles')
-
-/*
-var pointerX = -1;
-var pointerY = -1;
-document.onmousemove = function(event) {
-	pointerX = event.pageX;
-	pointerY = event.pageY;
+function showTitle (addImg) {
+    var pointerX = -1;
+    var pointerY = -1;
+    document.onmousemove = function(event) {
+        pointerX = event.pageX;
+        pointerY = event.pageY;
+    }
+    setInterval(pointerCheck, 1000);
+    function pointerCheck() {
+        console.log('Cursor at: '+pointerX+', '+pointerY);
+    addImg.addEventListener("mouseenter", ()
+    => {cursor.addImg.opacity
+    })
 }
-setInterval(pointerCheck, 1000);
-function pointerCheck() {
-	console.log('Cursor at: '+pointerX+', '+pointerY);
-}
-*/
+
+
+
+
+
 
 /*
 function mouseShowTitle() {
