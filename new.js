@@ -135,7 +135,7 @@ function Sci_FiCategory() {
                 let addImg = document.createElement("img");
                 addImg.src = eltsImg.image_url
                 showInfos(addImg, eltsImg)
-                carrousel(addImg, eltsImg, container)
+                //carrousel(addImg, eltsImg, container)
                 imgSci_FiCategory.append(addImg)
             })
         })
@@ -172,12 +172,12 @@ function showInfos(addImg, eltsImg) {
 
 function carrousel(container) {
     const slider = container.querySelector(".slider");
-    const items = slider.querySelectorAll("img")
+    const eltsImg = slider.querySelectorAll("img")
 }
 carrousel(document.querySelectorAll(".container"));
 
 const sliderVisibleWidth = slider.offsetWidth;
-const totalItemsWidth = getTotalItemsWidth(items);
+const totalItemsWidth = getTotalItemsWidth(eltsImg);
 const maxXOffset = 0;
 const minXOffset = - (totalItemsWidth - sliderVisibleWidth);
 const sliderRenderer = css(slider);
@@ -187,9 +187,9 @@ const sliderX = value(0, (x) => sliderRenderer.set("x", x))
 sliderX.set(-100);
 
 ///////MESURER LE CARROUSEL///////
-function getTotalItemsWidth(items) {
-    const { left } = items[0].getBoundingClientRect();
-    const { right } = items[items.length - 1].getBoundingClientRect();
+function getTotalItemsWidth(eltsImg) {
+    const { left } = eltsImg[0].getBoundingClientRect();
+    const { right } = eltsImg[eltsImg.length - 1].getBoundingClientRect();
     return right - left;
 }
 /*

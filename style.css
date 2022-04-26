@@ -91,15 +91,16 @@ h1
     text-align: center;
     font-size: medium;
     font-family: Georgia, serif;
-    color: whitesmoke;
-
+    color: black;
 }
+
 .modal-content p {
     text-align: center;
     font-size: small;
     font-family: Georgia, serif;
-    color: whitesmoke;
+    color: black;
 }
+
 
 /* fermeture boutonModal */
 .close {
@@ -143,7 +144,14 @@ h1
     margin: 0 10px;
 }
 
-/*ajout gestion des image, taille...etc */
+.slider img {
+    flex: 0 0 150px;
+    height: 215px;
+    margin-left: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+}
 
 .controls {
     margin-top: 20px;
@@ -151,19 +159,31 @@ h1
     display: flex;
     justify-content: center;
     align-items: center;
-        button {
-        border: none;
-        border-radius: 25px;
-        background: hsla(0, 90%, 65%, 1);
-        padding: 12px 15px;
-        color: lightgreen;
-        font-size: 18px;
-        font-weight: bold;
-        line-height: 18px;
-        -webkit-appearance: none;
-        cursor: pointer;
-    }
 }
+
+.controls button {
+    border-radius: 25px;
+    background: lightgreen;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 100%;
+    cursor: pointer;
+    text-align: center;
+    top: 0;
+    z-index: 3;
+}
+
+.container .controls button prev {
+    position: absolute;
+    left: -50px;
+}
+
+.container .controls button next {
+    position: absolute;
+    right: -50px;
+}
+
 
 .progress-bar {
     flex: 0 0 200px;
