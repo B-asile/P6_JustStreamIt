@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.scss"/>
     <title>Just stream it</title>
 </head>
 
@@ -33,30 +33,65 @@
             </section>
 
             <section>
-                <h1>films les mieux notés</h1>
-                <div id="topRatedFilms"></div>
+                <div classe="container">
+                    <h1>films les mieux notés</h1>
+                    <div class="slider">
+                       <ul id="topRatedFilms"></ul>
+                    </div>
+                    <div class="controls">
+                        <button class="prev"><</button>
+                        <div class="progress-bar"></div>
+                        <button class="next">></button>
+                    </div>
+                </div>
             </section>
 
             <section>
-                <h1>Catégorie Action</h1>
-                <div id="ActionCategory"></div>
+                <div classe="container">
+                    <h1>Catégorie Action</h1>
+                    <div class="slider">
+                        <ul id="ActionCategory"></ul>
+                    </div>
+                    <div class="controls">
+                        <button class="prev"><</button>
+                        <div class="progress-bar"></div>
+                        <button class="next">></button>
+                    </div>
+                </div>
             </section>
 
             <section>
-                <h1>Catégorie Comedy</h1>
-                <div id="ComedyCategory"></div>
+                <div classe="container">
+                    <h1>Catégorie Comedy</h1>
+                    <div class="slider">
+                        <ul id="ComedyCategory"></ul>
+                    </div>
+
+                    <div class="controls">
+                        <button class="prev"><</button>
+                        <div class="progress-bar"></div>
+                        <button class="next">></button>
+                    </div>
+                </div>
             </section>
 
             <section>
-                <h1>Catégorie Science-Fiction</h1>
-                <div id="SF_Category"></div>
+                <div classe="container">
+                    <h1>Catégorie Science-Fiction</h1>
+                    <div class="slider">
+                       <ul id="SF_Category"></ul>
+                    </div>
+                    <div class="controls">
+                        <button class="prev"><</button>
+                        <div class="progress-bar"></div>
+                        <button class="next">></button>
+                    </div>
+                </div>
             </section>
-
-            <button id="myBtn"></button>
 
             <div id="myModal">
                 <div class="modal_content">
-                    <span class="close">x</span>
+                    <span class="close">&times;</span>
                 </div>
             </div>
 

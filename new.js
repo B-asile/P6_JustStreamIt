@@ -1,3 +1,5 @@
+
+
 // récupérer les données des films depuis l'API http://localhost:8000/api/v1/ à l'aide dr requ^êtes Ajax
 // les afficher sur une interface web
 //la mise à jour des données doit se faire automatiquement
@@ -133,7 +135,7 @@ function Sci_FiCategory() {
                 let addImg = document.createElement("img");
                 addImg.src = eltsImg.image_url
                 showInfos(addImg, eltsImg)
-                console.log("rte")
+                carrousel(addImg, eltsImg, container)
                 imgSci_FiCategory.append(addImg)
             })
         })
@@ -146,9 +148,7 @@ Sci_FiCategory()
 function showInfos(addImg, eltsImg) {
     const modal = document.getElementById("myModal");
     console.log(addImg)
-    //selectedImg.addEventListener("click", function(event) {
     addImg.onclick = function(){
-        //event.preventDefault()
         modal.style.display = "block"
         modal.innerHTML = `<h2 style="text-align: center">${eltsImg.title}</h2>
                            <p><strong>Genre: </strong>${eltsImg.gender}</p>
@@ -157,15 +157,42 @@ function showInfos(addImg, eltsImg) {
                            <p><strong>Réalisateur: </strong>${eltsImg.writers}</p>
                            <p><strong>acteurs: </strong>${eltsImg.actors}</p>
                            <p><strong>synopsis: </strong>${eltsImg.actors}</p>`
-        modal.innerHTML = "bonjour"
     }
     let span = document.getElementsByClassName("close")[0];
     span.oneClick = function() {
             modal.style.display = "none"
         }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
     console.log("ER")
 }
 
+function carrousel(container) {
+    const slider = container.querySelector(".slider");
+    const items = slider.querySelectorAll("img")
+}
+carrousel(document.querySelectorAll(".container"));
+
+const sliderVisibleWidth = slider.offsetWidth;
+const totalItemsWidth = getTotalItemsWidth(items);
+const maxXOffset = 0;
+const minXOffset = - (totalItemsWidth - sliderVisibleWidth);
+const sliderRenderer = css(slider);
+// create "value" pour suivre le décalage de x de notre curseur et
+// mettre à jour la translateX propriété du curseur lorsqu'il change :
+const sliderX = value(0, (x) => sliderRenderer.set("x", x))
+sliderX.set(-100);
+
+///////MESURER LE CARROUSEL///////
+function getTotalItemsWidth(items) {
+    const { left } = items[0].getBoundingClientRect();
+    const { right } = items[items.length - 1].getBoundingClientRect();
+    return right - left;
+}
+/*
 function showTitle (addImg) {
     var pointerX = -1;
     var pointerY = -1;
@@ -177,88 +204,11 @@ function showTitle (addImg) {
     function pointerCheck() {
         console.log('Cursor at: '+pointerX+', '+pointerY);
     addImg.addEventListener("mouseenter", ()
-    => {cursor.addImg.opacity
+    => {cursor.addImg.
     })
-}
-
-
-
-
-
-
-/*
-function mouseShowTitle() {
-    const moviesTitle = document.getElementsByTagName("img");
-    data.results.forEach(elt => {
-        ("img").moviesTitle.mousemove(function (event) {
-            let addTitle = document.createElement("title")
-        });
-    })
+    }
 }
 */
-/*function Top_Rated_Films () {
-    const newElt = document.createElement("div");
-    let elt = document.getElementById("carousel1");
 
-    elt.appendChild(newElt);
-    console.log(newElt);
+// .style.filter = opacity
 
-    let addInDiv = document.createElement("img");
-    addInDiv.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNjA5Y2ZhYzctNDc1Yy00OGViLWI3NGUtOTYwZmE3NDFiYmIxXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_UY268_CR72,0,182,268_AL_.jpg");
-    newElt.append(addInDiv);
-    console.log(addInDiv);
-}
-Top_Rated_Films()*/
-
-
-
-/*function SfCategory (url) {
-    let SfCategory = document.getElementsByClassName('Sci_Fi_element')
-    console.log(SfCategory[0])
-    console.log(SfCategory[1])
-
-    //créer bloque image
-    let createImg = document.createElement("img")
-    console.log(createImg)
-    createImg.setAttribute("src", url)
-    console.log(createImg)
-    SfCategory[0].append(createImg)
-}
-
-SfCategory ("https://m.media-amazon.com/images/M/MV5BNTY4ZDk5MzYtNjk2Zi00ZWY3LTgwZjUtNDc5MWEzMWFlOTQzXkEyXkFqcGdeQXVyNjU1MTEwMjI@._V1_UY268_CR1,0,182,268_AL_.jpg")
-
-//récup les infos API depuis URL en paramètre
-function SF_movie (url)  {
-    let SF_movie = document.getElementsByClassName('Sci_Fi_element', 'Element1')
-    console.log(SF_movie[0])
-    let getMovie = document.createElement("url")
-    getMovie.setAttribute("url", "http://localhost:8000/api/v1/titles/574" )
-    console.log(getMovie)
-    SF_movie[0].append(getMovie)
-}
-SF_movie("http://localhost:8000/api/v1/titles/574")
-
-//créer virtuellement le html pour afficher un film, +renvoie avec return
-function createHTMLMovie () {
-    const newDiv = document.createElement("div");
-    newDiv.setAttribute("class","Sci_Fi_element");
-    console.log(newDiv.outerHTML)
-    let addNewDiv = document.getElementsByClassName("carousel__panorama");
-    console.log(addNewDiv)
-    addNewDiv[0].appendChild(newDiv);
-}
-createHTMLMovie ()
-
-// reçoit un element
-
-function addInHTML () {
-    let addInHTML = document.getElementsByClassName('Sci_Fi_element')
-    console.log(addInHTML)
-    let createImg5 = document.createElement("img");
-    createImg5.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNjU1NDMyNGEtODJkYy00M2Y4LTk5YzItYTYxMzkzZWI1MmJiXkEyXkFqcGdeQXVyMzI5NDcxNzI@._V1_UY268_CR5,0,182,268_AL_.jpg");
-    addInHTML[4].appendChild(createImg5);*/
-
-    //let addInHTML = document.getElementsByClassName("carousel__panorama");
-    //let createImg5 = document.createElement("img");
-    //createImg5.setAttribute("src", "https://m.media-amazon.com/images/M/MV5BNjU1NDMyNGEtODJkYy00M2Y4LTk5YzItYTYxMzkzZWI1MmJiXkEyXkFqcGdeQXVyMzI5NDcxNzI@._V1_UY268_CR5,0,182,268_AL_.jpg");
-    //addInHTML[5].append(createImg5)
