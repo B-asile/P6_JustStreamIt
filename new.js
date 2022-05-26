@@ -82,7 +82,7 @@ ComedyCategory()
 
 function Sci_FiCategory() {
     let urlCategory = "Sci-Fi"
-    createCarousel("SF_Category", urlCategory)
+    createCarousel("SF_Category", urlCategory);
 }
 Sci_FiCategory()
 
@@ -95,10 +95,10 @@ function addMoviesInCarousel(movieData, htmlCategory) {
    // })
 }
 
-function carouselAnimation(htmlCategory) {
-    let items = document.getElementById(htmlCategory);
-    let slideVisible = items.length;
-    console.log(slideVisible)
+function carouselAnimation(movie) {
+    let items = [].slice.call(movie)
+    let slideVisible = 5;
+    console.log(items)
     let slideToScroll = 1;
     let currentSlide = 0;
     let nextImg = document.querySelectorAll("next");
@@ -118,15 +118,15 @@ async function createCarousel(htmlCategory, urlCategory) {
                 for (movie of movieData.results) {
                     if (currentMovie < 7) {
                         addMoviesInCarousel(movie, htmlCategory);
-                        console.log(movie)
                         currentMovie++;
                     } else break;
                 }
             })
             .catch(error => console.log(error));
         page++;
-    } while (currentMovie < 7)
-} carouselAnimation(htmlCategory)
+    } while (currentMovie < 7);
+    carouselAnimation();
+}
 
 /*function showInfos(addImg, movieData) {
     let myModal = document.getElementById("myModal")
