@@ -11,16 +11,16 @@
                 <header>
                     <div id="titre_principal">
                         <div id="logo">
-                            <img src="/Users/darkvadresse/Desktop/Cptr_JSI.png" alt="logo"/>
+                            <img src="/Users/darkvadresse/Téléchargements/JSI_rev.png" alt="logo"/>
                             <h1>Just Stream It</h1>
                         </div>
                     </div>
-                    <nav>
+                    <!--<nav>
                         <ul>
                             <li><a href="#">Accueil</a></li>
                             <li><a href="#">Catégories</a></li>
                         </ul>
-                    </nav>
+                    </nav>-->
                 </header>
 
             <section>
@@ -36,13 +36,12 @@
                 <div classe="container">
                     <h1>films les mieux notés</h1>
                     <div class="slider">
-                       <ul id="topRatedFilms"></ul>
+                       <div id="topRatedFilms"></div>
+                            <button class="prev"><</button>
+                            <button class="next">></button>
+                        </div>
                     </div>
-                    <div class="controls">
-                        <button class="prev"><</button>
-                        <div class="progress-bar"></div>
-                        <button class="next">></button>
-                    </div>
+
                 </div>
             </section>
 
@@ -50,13 +49,12 @@
                 <div classe="container">
                     <h1>Catégorie Action</h1>
                     <div class="slider">
-                        <ul id="ActionCategory"></ul>
+                        <div id="ActionCategory"></div>
+                            <button class="prev"><</button>
+                            <button class="next">></button>
+                        </div>
                     </div>
-                    <div class="controls">
-                        <button class="prev"><</button>
-                        <div class="progress-bar"></div>
-                        <button class="next">></button>
-                    </div>
+
                 </div>
             </section>
 
@@ -64,13 +62,10 @@
                 <div classe="container">
                     <h1>Catégorie Comedy</h1>
                     <div class="slider">
-                        <ul id="ComedyCategory"></ul>
-                    </div>
-
-                    <div class="controls">
-                        <button class="prev"><</button>
-                        <div class="progress-bar"></div>
-                        <button class="next">></button>
+                        <div id="ComedyCategory"></div>
+                            <button class="prev"><</button>
+                            <button class="next">></button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -79,20 +74,17 @@
                 <div classe="container">
                     <h1>Catégorie Science-Fiction</h1>
                     <div class="slider">
-                       <ul id="SF_Category"></ul>
-                    </div>
-                    <div class="controls">
-                        <button class="prev"><</button>
-                        <div class="progress-bar"></div>
-                        <button class="next">></button>
+                       <div id="SF_Category"></div>
+                            <button class="prev" onclick="previmge()"><</button>
+                            <button class="next" onclick="nextimge()">></button>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <div id="myModal">
-                <div class="modal_content">
-                    <span class="close">&times;</span>
-                </div>
+                <div id="modal_content"></div>
+                <span class="close">&times;</span>
             </div>
 
         </div>

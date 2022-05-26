@@ -39,6 +39,11 @@ Le résumé du film*/
 }
 
 Movies()*/
+const baseUrl = "http://localhost:8000/api/v1/titles/"
+var TopRatedFilmsList = []
+var ActionCategoryList = []
+var ComedyCategoryList = []
+var Sci_FiCategoryList = []
 
 function bestMovie() {
     fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
@@ -46,9 +51,7 @@ function bestMovie() {
             if(response.ok){
                 response.json().then(data => {
                     const imgBestMovie = document.getElementsByClassName("imgBestMovie");
-                    console.log(imgBestMovie)
                     let addImg = document.createElement("img");
-                    console.log(data)
                     addImg.src = data.results[0].image_url
                     imgBestMovie[0].append(addImg);
                 })
@@ -60,155 +63,93 @@ function bestMovie() {
 bestMovie()
 
 function TopRatedFilms() {
-    fetch('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score')
-        .then(function(res) {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-        .then(function(data) {
-            const imgTopRatedFilms = document.getElementById("topRatedFilms");
-                data.results.forEach(elt => {
-                    let addImg = document.createElement("img");
-                    addImg.src = elt.image_url
-                    imgTopRatedFilms.append(addImg)
-                })
-        })
-        .catch(function(err) {
-            console.error('retour serveur : ', response.status)
-        })
+    let urlCategory = ""
+    createCarousel("topRatedFilms", urlCategory)
 }
 TopRatedFilms()
 
 function ActionCategory() {
-    fetch('http://localhost:8000/api/v1/titles/?genre=Action&genre_contains=&sort_by=-imdb_score')
-        .then(function(res) {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-        .then(function(data) {
-            const imgActionCategory = document.getElementById("ActionCategory");
-                data.results.forEach(elt => {
-                    let addImg = document.createElement("img");
-                    addImg.src = elt.image_url
-                    imgActionCategory.append(addImg)
-                })
-        })
-        .catch(function(err) {
-            console.error('retour serveur : ', response.status)
-        })
+    let urlCategory = "Action"
+    createCarousel("ActionCategory", urlCategory)
 }
 ActionCategory()
 
 function ComedyCategory() {
-    fetch('http://localhost:8000/api/v1/titles/?genre=Comedy&genre_contains=&sort_by=-imdb_score')
-        .then(function(res) {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-        .then(function(data) {
-            const imgComedyCategory = document.getElementById("ComedyCategory");
-            data.results.forEach(elt => {
-                let addImg = document.createElement("img");
-                addImg.src = elt.image_url
-                imgComedyCategory.append(addImg)
-            })
-        })
-        .catch(function(err) {
-            console.error('retour serveur : ', response.status)
-        })
+    let urlCategory = "Comedy"
+    createCarousel("ComedyCategory", urlCategory)
 }
 ComedyCategory()
 
 function Sci_FiCategory() {
-    fetch('http://localhost:8000/api/v1/titles/?genre=Sci-Fi&genre_contains=&sort_by=-imdb_score')
-        .then(function(res) {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-        .then(function(data) {
-            const imgSci_FiCategory = document.getElementById("SF_Category");
-            data.results.forEach(eltsImg => {
-                let addImg = document.createElement("img");
-                addImg.src = eltsImg.image_url
-                showInfos(addImg, eltsImg)
-                //carrousel(addImg, eltsImg, container)
-                imgSci_FiCategory.append(addImg)
-            })
-        })
-        .catch(function(err) {
-            console.error('retour serveur : ', response.status)
-        })
+    let urlCategory = "Sci-Fi"
+    createCarousel("SF_Category", urlCategory)
 }
 Sci_FiCategory()
 
-function showInfos(addImg, eltsImg) {
-    const modal = document.getElementById("myModal");
+function addMoviesInCarousel(movieData, htmlCategory) {
+    let carouselContent = document.getElementById(htmlCategory);
+    //movieData.results.forEach(moviesPictures => {
+    let addPicture = document.createElement("img");
+    addPicture.src = movieData.image_url;
+    carouselContent.append(addPicture);
+   // })
+}
+
+function carouselAnimation(htmlCategory) {
+    let items = document.getElementById(htmlCategory);
+    let slideVisible = items.length;
+    console.log(slideVisible)
+    let slideToScroll = 1;
+    let currentSlide = 0;
+    let nextImg = document.querySelectorAll("next");
+    let prevImg = document.querySelectorAll("prev");
+    nextImg.onclick = currentSlide + slideToScroll;
+    prevImg.onclick = currentSlide - slideToScroll;
+}
+
+
+async function createCarousel(htmlCategory, urlCategory) {
+    let page = 1;
+    let currentMovie = 0;
+    do {
+        await fetch('http://localhost:8000/api/v1/titles/?' + page + '&genre=' + urlCategory + '&genre_contains=&sort_by=-imdb_score')
+            .then(response => response.json())
+            .then(movieData => {
+                for (movie of movieData.results) {
+                    if (currentMovie < 7) {
+                        addMoviesInCarousel(movie, htmlCategory);
+                        console.log(movie)
+                        currentMovie++;
+                    } else break;
+                }
+            })
+            .catch(error => console.log(error));
+        page++;
+    } while (currentMovie < 7)
+} carouselAnimation(htmlCategory)
+
+/*function showInfos(addImg, movieData) {
+    let myModal = document.getElementById("myModal")
+    let modal = document.getElementById("modal_content");
     console.log(addImg)
     addImg.onclick = function(){
-        modal.style.display = "block"
-        modal.innerHTML = `<h2 style="text-align: center">${eltsImg.title}</h2>
-                           <p><strong>Genre: </strong>${eltsImg.gender}</p>
-                           <p><strong>Date de sortie: </strong>${eltsImg.date_published}</p>
-                           <p><strong>Note utilisateurs: </strong>${eltsImg.imdb_score}</p>
-                           <p><strong>Réalisateur: </strong>${eltsImg.writers}</p>
-                           <p><strong>acteurs: </strong>${eltsImg.actors}</p>
-                           <p><strong>synopsis: </strong>${eltsImg.actors}</p>`
+        myModal.style.display = "block"
+        modal.innerHTML = `<h2 style="text-align: center">${movieData.title}</h2>
+                           <img><img src="${movieData.image_url}"</img>
+                           <p><strong>Genre: </strong>${movieData.gender}</p>
+                           <p><strong>Date de sortie: </strong>${movieData.date_published}</p>
+                           <p><strong>Note utilisateurs: </strong>${movieData.imdb_score}</p>
+                           <p><strong>Réalisateur: </strong>${movieData.writers}</p>
+                           <p><strong>acteurs: </strong>${movieData.actors}</p>
+                           <p><strong>synopsis: </strong>${movieData.actors}</p>`
     }
     let span = document.getElementsByClassName("close")[0];
-    span.oneClick = function() {
-            modal.style.display = "none"
+    span.onclick = function() {
+            myModal.style.display = "none"
         }
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = "none";
+            myModal.style.display = "none";
         }
     }
-    console.log("ER")
-}
-
-function carrousel(container) {
-    const slider = container.querySelector(".slider");
-    const eltsImg = slider.querySelectorAll("img")
-}
-carrousel(document.querySelectorAll(".container"));
-
-const sliderVisibleWidth = slider.offsetWidth;
-const totalItemsWidth = getTotalItemsWidth(eltsImg);
-const maxXOffset = 0;
-const minXOffset = - (totalItemsWidth - sliderVisibleWidth);
-const sliderRenderer = css(slider);
-// create "value" pour suivre le décalage de x de notre curseur et
-// mettre à jour la translateX propriété du curseur lorsqu'il change :
-const sliderX = value(0, (x) => sliderRenderer.set("x", x))
-sliderX.set(-100);
-
-///////MESURER LE CARROUSEL///////
-function getTotalItemsWidth(eltsImg) {
-    const { left } = eltsImg[0].getBoundingClientRect();
-    const { right } = eltsImg[eltsImg.length - 1].getBoundingClientRect();
-    return right - left;
-}
-/*
-function showTitle (addImg) {
-    var pointerX = -1;
-    var pointerY = -1;
-    document.onmousemove = function(event) {
-        pointerX = event.pageX;
-        pointerY = event.pageY;
-    }
-    setInterval(pointerCheck, 1000);
-    function pointerCheck() {
-        console.log('Cursor at: '+pointerX+', '+pointerY);
-    addImg.addEventListener("mouseenter", ()
-    => {cursor.addImg.
-    })
-    }
-}
-*/
-
-// .style.filter = opacity
-
+}*/
