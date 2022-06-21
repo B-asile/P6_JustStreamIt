@@ -24,26 +24,7 @@ Le pays d’origine
 Le résultat au Box Office
 Le résumé du film*/
 
-/*function Movies () {
-    fetch("http://localhost:8000/api/v1/titles/?id")
-        .then(response => {
-            if(response.ok){
-                response.json().then(data => {
-                    moviesId = data.results.id
-                    console.log(moviesId)
-                })
-            }else {
-                console.log("erreur")
-            }
-        })
-}
-
-Movies()*/
 const baseUrl = "http://localhost:8000/api/v1/titles/"
-var TopRatedFilmsList = []
-var ActionCategoryList = []
-var ComedyCategoryList = []
-var Sci_FiCategoryList = []
 
 function bestMovie() {
     fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
@@ -62,62 +43,81 @@ function bestMovie() {
 }
 bestMovie()
 
-function TopRatedFilms() {
-    let urlCategory = ""
-    createCarousel("topRatedFilms", urlCategory)
-}
-TopRatedFilms()
 
-function ActionCategory() {
-    let urlCategory = "Action"
-    createCarousel("ActionCategory", urlCategory)
-}
-ActionCategory()
 
-function ComedyCategory() {
-    let urlCategory = "Comedy"
-    createCarousel("ComedyCategory", urlCategory)
+function createCategory(htmlCategory, urlCategory) {
+    let sevenMovies = createCarousel(htmlCategory, urlCategory);
+    sevenMovies.then(movies => {
+        carouselAnimation(htmlCategory, movies)
+    })
 }
-ComedyCategory()
-
-function Sci_FiCategory() {
-    let urlCategory = "Sci-Fi"
-    createCarousel("SF_Category", urlCategory);
-}
-Sci_FiCategory()
+createCategory("topRatedFilms", "")
+createCategory("ActionCategory", "Action")
+createCategory("ComedyCategory", "Comedy")
+createCategory("SF_Category", "Sci-Fi")
 
 function addMoviesInCarousel(movieData, htmlCategory) {
     let carouselContent = document.getElementById(htmlCategory);
-    //movieData.results.forEach(moviesPictures => {
     let addPicture = document.createElement("img");
     addPicture.src = movieData.image_url;
     carouselContent.append(addPicture);
-   // })
 }
 
-function carouselAnimation(movie) {
-    let items = [].slice.call(movie)
-    let slideVisible = 5;
-    console.log(items)
-    let slideToScroll = 1;
-    let currentSlide = 0;
-    let nextImg = document.querySelectorAll("next");
-    let prevImg = document.querySelectorAll("prev");
-    nextImg.onclick = currentSlide + slideToScroll;
-    prevImg.onclick = currentSlide - slideToScroll;
+function carouselAnimation(htmlCategory, sevenMovies) {
+    slideVisible = 5;
+    slideToScroll = 1;
+    currentItem = 0;
+    sevenMovies.forEach(movie => addMoviesInCarousel(movie, htmlCategory))
+    let carousel = document.getElementById(htmlCategory);
+    let nextSlide = carousel.getElementsByClassName('next')[0];
+    let prevSlide = carousel.getElementsByClassName('prev');
+    let ratio = carousel.children.length / slideVisible;
+    carousel.style.width = (ratio * 100) + "%";
+    Array.from(carousel.children).forEach((movies, htmlCategory) => {
+      movies.style.width = (100 / slideVisible) + "%"
+        function goToNextSlide(index)  {
+          if (index < 0) {
+            index = movies.length - slideVisible; // goTo end
+          }
+          else if (index >= movies.length || ((movies[currentItem + slideVisible] === undefined) && index > currentItem)) {
+              index = 0; // beginning
+          }
+          let translateX = index * -100 / movies.length;
+          carousel.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
+          currentItem = index;
+      }
+      console.log(nextSlide)
+      nextSlide.onclick = function () {
+          goToNextSlide(currentItem + 1)
+      }
+      prevSlide.onclick = function () {
+          goToNextSlide(currentItem - 1)
+      }
+    });
+    //carousel.children.style.width = ((100 / slideVisible) / ratio) + "%";
+    //carousel.children[6].style.display  = "none"
+    //carousel.children[5].style.display  = "none"
+    //nextSlide.addEventListener('click', moveToNextSlide)
+    // créer index pour switcher entre elements cachés
+    // display block nextimg
+    //for (let i = 0 + offset; i < slideVisible + offset; i++) {
+       // addMoviesInCarousel(sevenMovies[i], htmlCategory);
+    //}
 }
 
 
 async function createCarousel(htmlCategory, urlCategory) {
     let page = 1;
     let currentMovie = 0;
+    let sevenMovies = [];
     do {
-        await fetch('http://localhost:8000/api/v1/titles/?' + page + '&genre=' + urlCategory + '&genre_contains=&sort_by=-imdb_score')
+        let url = 'http://localhost:8000/api/v1/titles/?page=' + page + '&genre=' + urlCategory + '&genre_contains=&sort_by=-imdb_score'
+        await fetch(url)
             .then(response => response.json())
             .then(movieData => {
                 for (movie of movieData.results) {
                     if (currentMovie < 7) {
-                        addMoviesInCarousel(movie, htmlCategory);
+                        sevenMovies.push(movie);
                         currentMovie++;
                     } else break;
                 }
@@ -125,7 +125,7 @@ async function createCarousel(htmlCategory, urlCategory) {
             .catch(error => console.log(error));
         page++;
     } while (currentMovie < 7);
-    carouselAnimation();
+    return sevenMovies
 }
 
 /*function showInfos(addImg, movieData) {
