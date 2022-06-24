@@ -45,16 +45,16 @@ bestMovie()
 
 
 
-function createCategory(htmlCategory, urlCategory) {
+function createCategory(htmlCategory, urlCategory, ButtonsCategory) {
     let sevenMovies = createCarousel(htmlCategory, urlCategory);
     sevenMovies.then(movies => {
-        carouselAnimation(htmlCategory, movies)
+        carouselAnimation(htmlCategory, movies, ButtonsCategory)
     })
 }
-createCategory("topRatedFilms", "")
-createCategory("ActionCategory", "Action")
-createCategory("ComedyCategory", "Comedy")
-createCategory("SF_Category", "Sci-Fi")
+createCategory("topRatedFilms", "", "buttons_topRatedFilms")
+createCategory("ActionCategory", "Action", "buttons_ActionCategory")
+createCategory("ComedyCategory", "Comedy", "buttons_ComedyCategory")
+createCategory("SF_Category", "Sci-Fi", "buttons_SF_Category")
 
 function addMoviesInCarousel(movieData, htmlCategory) {
     let carouselContent = document.getElementById(htmlCategory);
@@ -63,38 +63,27 @@ function addMoviesInCarousel(movieData, htmlCategory) {
     carouselContent.append(addPicture);
 }
 
-function carouselAnimation(htmlCategory, sevenMovies) {
+function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
     movies = []
     slideVisible = 5;
     slideToScroll = 1;
     currentItem = 0;
-    sevenMovies.forEach(movie => addMoviesInCarousel(movie, htmlCategory))
+    sevenMovies.forEach(movie => addMoviesInCarousel(movie, htmlCategory, ButtonsCategory))
     let carousel = document.getElementById(htmlCategory);
-    //let nextButton = carousel.getElementsByClassName('next')[1];
-    //let prevButton = carousel.getElementsByClassName('prev')[0];
-    //nextButton.addEventListener('click', function () {"grrrrh!"});
-    //prevButton.addEventListener('click', prevSlide);
-    /*nextButton.onclick = function () {
-        goToNextSlide(currentItem + 1)
-    }
-    prevButton.onclick = function () {
-        goToNextSlide(currentItem - 1)
-    }*/
-    this.movies = [].slice.call(carousel.children)
+    let carouselButtons = document.getElementById(ButtonsCategory);
+    movies = [].slice.call(carousel.children)
     let ratio = this.movies.length / slideVisible;
     carousel.style.width = (ratio * 100) + "%";
-    //console.log(this.movies)
-    //Array.from(carousel.children).forEach((movies) => {})
-    this.movies.forEach(movie => {
+    movies.forEach(movie => {
         movie.style.width = (100 / slideVisible) + "%"
     })
-    //let nextButton = movies[1];
-    //let prevButton = movies[0];
-    let nextButton = document.getElementsByClassName('next')[1];
-    let prevButton = document.getElementsByClassName('prev')[0];
+    console.log(carouselButtons)
+
+/*    let nextButton = carouselButtons.getElementsByClassName( 'next');
+    let prevButton = carouselButtons.getElementsByClassName( 'prev');
     nextButton.addEventListener('click', nextSlide);
-    prevButton.addEventListener('click', prevSlide);
-    console.log(this.movies)
+    prevButton.addEventListener('click', prevSlide);*/
+
     function nextSlide() {
         goToNextSlide(currentItem + 1)
     }
@@ -103,15 +92,16 @@ function carouselAnimation(htmlCategory, sevenMovies) {
     }
     function goToNextSlide(index)  {
         if (index < 0) {
-            index = this.movies.length - slideVisible; //To end
+            index = movies.length - slideVisible; //To end
         }
-        else if (index >= this.movies.length || ((this.movies[currentItem + slideVisible] === undefined) && index > currentItem)) {
+        else if (index >= movies.length || ((movies[currentItem + slideVisible] === undefined) && index > currentItem)) {
             index = 0; // beginning
         }
-        let translateX = index * -100 / this.movies.length;
+        let translateX = index * -100 / movies.length;
         carousel.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
         currentItem = index;
     }
+    console.log(movies)
 }
 
 
