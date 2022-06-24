@@ -64,45 +64,54 @@ function addMoviesInCarousel(movieData, htmlCategory) {
 }
 
 function carouselAnimation(htmlCategory, sevenMovies) {
+    movies = []
     slideVisible = 5;
     slideToScroll = 1;
     currentItem = 0;
     sevenMovies.forEach(movie => addMoviesInCarousel(movie, htmlCategory))
     let carousel = document.getElementById(htmlCategory);
-    let nextSlide = carousel.getElementsByClassName('next')[0];
-    let prevSlide = carousel.getElementsByClassName('prev');
-    let ratio = carousel.children.length / slideVisible;
+    //let nextButton = carousel.getElementsByClassName('next')[1];
+    //let prevButton = carousel.getElementsByClassName('prev')[0];
+    //nextButton.addEventListener('click', function () {"grrrrh!"});
+    //prevButton.addEventListener('click', prevSlide);
+    /*nextButton.onclick = function () {
+        goToNextSlide(currentItem + 1)
+    }
+    prevButton.onclick = function () {
+        goToNextSlide(currentItem - 1)
+    }*/
+    this.movies = [].slice.call(carousel.children)
+    let ratio = this.movies.length / slideVisible;
     carousel.style.width = (ratio * 100) + "%";
-    Array.from(carousel.children).forEach((movies, htmlCategory) => {
-      movies.style.width = (100 / slideVisible) + "%"
-        function goToNextSlide(index)  {
-          if (index < 0) {
-            index = movies.length - slideVisible; // goTo end
-          }
-          else if (index >= movies.length || ((movies[currentItem + slideVisible] === undefined) && index > currentItem)) {
-              index = 0; // beginning
-          }
-          let translateX = index * -100 / movies.length;
-          carousel.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
-          currentItem = index;
-      }
-      console.log(nextSlide)
-      nextSlide.onclick = function () {
-          goToNextSlide(currentItem + 1)
-      }
-      prevSlide.onclick = function () {
-          goToNextSlide(currentItem - 1)
-      }
-    });
-    //carousel.children.style.width = ((100 / slideVisible) / ratio) + "%";
-    //carousel.children[6].style.display  = "none"
-    //carousel.children[5].style.display  = "none"
-    //nextSlide.addEventListener('click', moveToNextSlide)
-    // créer index pour switcher entre elements cachés
-    // display block nextimg
-    //for (let i = 0 + offset; i < slideVisible + offset; i++) {
-       // addMoviesInCarousel(sevenMovies[i], htmlCategory);
-    //}
+    //console.log(this.movies)
+    //Array.from(carousel.children).forEach((movies) => {})
+    this.movies.forEach(movie => {
+        movie.style.width = (100 / slideVisible) + "%"
+    })
+    //let nextButton = movies[1];
+    //let prevButton = movies[0];
+    let nextButton = document.getElementsByClassName('next')[1];
+    let prevButton = document.getElementsByClassName('prev')[0];
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
+    console.log(this.movies)
+    function nextSlide() {
+        goToNextSlide(currentItem + 1)
+    }
+    function prevSlide() {
+        goToNextSlide(currentItem - 1)
+    }
+    function goToNextSlide(index)  {
+        if (index < 0) {
+            index = this.movies.length - slideVisible; //To end
+        }
+        else if (index >= this.movies.length || ((this.movies[currentItem + slideVisible] === undefined) && index > currentItem)) {
+            index = 0; // beginning
+        }
+        let translateX = index * -100 / this.movies.length;
+        carousel.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
+        currentItem = index;
+    }
 }
 
 

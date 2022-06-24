@@ -101,7 +101,7 @@ h1 {
 
 /* CARROUSEL */
 .container {
-    position: relative;  /* max-width: ?px*/
+    position: center;  /* max-width: ?px*/
     height: 20%;          /* marrgin: 0 auto;*/
     width: 80%;           /* padding: 50px;*/
 }
@@ -148,13 +148,14 @@ h1 {
     padding-bottom: 10px;
     overflow: hidden;
 }
-.slider::after {
+/*.slider::after {
     content: '';
     clear: both;
     display: table;
-}
+}*/
 
 .slider img {
+    position: relative;
     min-width: 15%;
     vertical-align: middle;
     cursor: pointer;
