@@ -71,18 +71,20 @@ function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
     sevenMovies.forEach(movie => addMoviesInCarousel(movie, htmlCategory, ButtonsCategory))
     let carousel = document.getElementById(htmlCategory);
     let carouselButtons = document.getElementById(ButtonsCategory);
-    movies = [].slice.call(carousel.children)
-    let ratio = this.movies.length / slideVisible;
+    movies = [].slice.call(carousel.children);
+    let ratio = movies.length / slideVisible;
     carousel.style.width = (ratio * 100) + "%";
     movies.forEach(movie => {
         movie.style.width = (100 / slideVisible) + "%"
     })
-    console.log(carouselButtons)
-
-/*    let nextButton = carouselButtons.getElementsByClassName( 'next');
-    let prevButton = carouselButtons.getElementsByClassName( 'prev');
+    console.log(carouselButtons.children)
+    let buttons = [].slice.call(carouselButtons.children);
+    let nextButton = buttons[1];
+    let prevButton = buttons[0];
+    //let nextButton = carouselButtons.getElementsByClassName( 'next');
+    //let prevButton = carouselButtons.getElementsByClassName( 'prev');
     nextButton.addEventListener('click', nextSlide);
-    prevButton.addEventListener('click', prevSlide);*/
+    prevButton.addEventListener('click', prevSlide);
 
     function nextSlide() {
         goToNextSlide(currentItem + 1)
