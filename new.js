@@ -11,20 +11,48 @@
 “Catégorie 2” : Montre les 7 films les mieux notés d’une autre catégorie.
 “Catégorie 3” : Idem sur une autre catégorie !*/
 /*Lorsqu’on clique sur le bouton du film en vedette ou sur l’image d’un des films une fenêtre modale s’ouvre. Dans cette fenêtre les informations suivantes doivent être présente :
-L’image de la pochette du film
-Le Titre du film
-Le genre complet du film
-Sa date de sortie
-Son Rated
-Son score Imdb
-Son réalisateur
-La liste des acteurs
-Sa durée
+//L’image de la pochette du film
+//Le Titre du film
+//Le genre complet du film
+//Sa date de sortie
+//Son Rated
+//Son score Imdb
+//Son réalisateur
+//La liste des acteurs
+//Sa durée
 Le pays d’origine
 Le résultat au Box Office
 Le résumé du film*/
 
 const baseUrl = "http://localhost:8000/api/v1/titles/"
+
+async function createModal(movieId) {
+    fetch(baseUrl + movieId)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            let myModal = document.getElementById("myModal");
+            myModal.style.display = "block"
+            document.getElementById('modal_content').innerHTML = `
+                <h2 style="text-align: center">${data.title}</h2>
+                <img><img src="${data.image_url}"</img>
+                <p><strong>Genre: </strong>${data.genres}</p>
+                <p><strong>Date de sortie: </strong>${data.date_published}</p>
+                <p><strong>Durée: </strong>${data.duration}<strong>min</strong></p>
+                <p><strong>Note utilisateurs: </strong>${data.imdb_score}</p>
+                <p><strong>Rated: </strong>${data.rated}</p>
+                <p><strong>Réalisateur: </strong>${data.directors}</p>
+                <p><strong>acteurs: </strong>${data.actors}</p>
+                <p><strong>synopsis: </strong>${data.long_description}</p>`
+            let span = document.getElementsByClassName("close")[0];
+            span.onclick = () => myModal.style.display = "none"
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    myModal.style.display = "none";
+                }
+            }
+        })
+}
 
 function bestMovie() {
     fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
@@ -32,9 +60,11 @@ function bestMovie() {
             if(response.ok){
                 response.json().then(data => {
                     const imgBestMovie = document.getElementsByClassName("imgBestMovie");
-                    let addImg = document.createElement("img");
-                    addImg.src = data.results[0].image_url
-                    imgBestMovie[0].append(addImg);
+                    let addPicture = document.createElement("img");
+                    addPicture.src = data.results[0].image_url
+                    movieId = data.results[0].id
+                    imgBestMovie[0].append(addPicture);
+                    addPicture.onclick = () => createModal(data.results[0].id)
                 })
             }else {
                 console.log("erreur");
@@ -61,10 +91,12 @@ function addMoviesInCarousel(movieData, htmlCategory) {
     let addPicture = document.createElement("img");
     addPicture.src = movieData.image_url;
     carouselContent.append(addPicture);
+    movieId = movieData.id;
+    addPicture.onclick = () => createModal(movieData.id)
+    console.log(movieId)
 }
 
 function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
-    movies = []
     slideVisible = 5;
     slideToScroll = 1;
     currentItem = 0;
@@ -77,7 +109,6 @@ function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
     movies.forEach(movie => {
         movie.style.width = (100 / slideVisible) + "%"
     })
-    console.log(carouselButtons.children)
     let buttons = [].slice.call(carouselButtons.children);
     let nextButton = buttons[1];
     let prevButton = buttons[0];
@@ -103,7 +134,6 @@ function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
         carousel.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
         currentItem = index;
     }
-    console.log(movies)
 }
 
 
@@ -129,11 +159,12 @@ async function createCarousel(htmlCategory, urlCategory) {
     return sevenMovies
 }
 
-/*function showInfos(addImg, movieData) {
+/*function createModal(addPicture, movieData) {
+
     let myModal = document.getElementById("myModal")
     let modal = document.getElementById("modal_content");
-    console.log(addImg)
-    addImg.onclick = function(){
+    //let movieItem = document.getElementsByTagName("img");
+    addPicture.onclick = function(){
         myModal.style.display = "block"
         modal.innerHTML = `<h2 style="text-align: center">${movieData.title}</h2>
                            <img><img src="${movieData.image_url}"</img>
