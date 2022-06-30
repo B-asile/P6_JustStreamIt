@@ -55,6 +55,8 @@ h1 {
     height: auto;
     overflow: auto; /*activer défilement si besoin */
     background-color: gainsboro;
+    backdrop-filter: blur(4px);
+    backdrop-filter: opacity(20%);
 }
 
 #modal_content h2 {
@@ -72,11 +74,14 @@ h1 {
     vertical-align: baseline;
     float: left;
     margin-left: 1%;
-    border-image: inherit;
+    border: 4px gainsboro;
+    border-bottom-width: 2px;
 }
 
 #modal_content p {
     margin-top: auto;
+    margine-left: 2%;
+    padding-bottom: 2%;
     /*text-align: justify-all;*/
     font-size: small;
     font-family: Arial, sans-serif;
@@ -99,11 +104,19 @@ h1 {
     cursor: pointer;
 }
 
+.bestMovie {
+    height: 20%;
+    marrgin: 0 auto;
+    width: 80%;
+    padding: 8%;
+}
+
 /* CARROUSEL */
 .container {
-    position: center;  /* max-width: ?px*/
-    height: 20%;          /* marrgin: 0 auto;*/
-    width: 80%;           /* padding: 50px;*/
+    height: 20%;
+    marrgin: 0 auto;
+    width: 80%;
+    padding: 8%;
 }
 
  button {
@@ -112,20 +125,25 @@ h1 {
      height: 30%;
      width: 30px;
      font-size: 20px;
-     border-color: snow;
-    /*justify-items: center;*/
+     border-color: black;
      background-color: snow;
      opacity: 0.63;
      font-family: sans-serif;
-     z-index: 2;
+     z-index: 3;
      line-height: normal; /*hauteur de la boite ?*/
      cursor: pointer;
+     transition: transform 0.3s;
 }
+
+ .prev:hover, .next:hover {
+     transform: scale(1.2);
+ }
 
 .prev {
     position: absolute;
     left: 0%;
     margin-top: -20px;
+    z-index: 3;
 }
 
 .next {
@@ -136,18 +154,20 @@ h1 {
 
 .slider {
     position: relative;
-    height: 25%;
+    height: 30%;
     width: auto;
     white-space: nowrap;
     display: inline-block;
-    white-space: nowrap;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 10px;
     overflow: hidden;
+    transition: transform 0.3s;
+    transform: translate3d(0, 0, 0);
 }
-/*.slider::after {
+
+/*.slider::before::after {
     content: '';
     clear: both;
     display: table;
@@ -159,8 +179,8 @@ h1 {
     vertical-align: middle;
     cursor: pointer;
 }
-/*
-img.active {
-    display: block;
-    animation: fade 0.8s;
-}*/
+
+.slider img:hover {
+     transform: scale(1.2);
+ }
+

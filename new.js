@@ -20,7 +20,7 @@
 //Son réalisateur
 //La liste des acteurs
 //Sa durée
-Le pays d’origine
+//Le pays d’origine
 Le résultat au Box Office
 Le résumé du film*/
 
@@ -42,6 +42,7 @@ async function createModal(movieId) {
                 <p><strong>Note utilisateurs: </strong>${data.imdb_score}</p>
                 <p><strong>Rated: </strong>${data.rated}</p>
                 <p><strong>Réalisateur: </strong>${data.directors}</p>
+                <p><strong>Pays d'origine: </strong>${data.countries}</p>
                 <p><strong>acteurs: </strong>${data.actors}</p>
                 <p><strong>synopsis: </strong>${data.long_description}</p>`
             let span = document.getElementsByClassName("close")[0];
@@ -73,8 +74,6 @@ function bestMovie() {
 }
 bestMovie()
 
-
-
 function createCategory(htmlCategory, urlCategory, ButtonsCategory) {
     let sevenMovies = createCarousel(htmlCategory, urlCategory);
     sevenMovies.then(movies => {
@@ -93,7 +92,6 @@ function addMoviesInCarousel(movieData, htmlCategory) {
     carouselContent.append(addPicture);
     movieId = movieData.id;
     addPicture.onclick = () => createModal(movieData.id)
-    console.log(movieId)
 }
 
 function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
@@ -126,16 +124,14 @@ function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
     function goToNextSlide(index)  {
         if (index < 0) {
             index = movies.length - slideVisible; //To end
+        } else if (index >= movies.length || movies[currentItem + slideVisible] === undefined) {
+            index = 0
         }
-        else if (index >= movies.length || ((movies[currentItem + slideVisible] === undefined) && index > currentItem)) {
-            index = 0; // beginning
-        }
-        let translateX = index * -100 / movies.length;
-        carousel.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
+        let translateX = index * -100 / slideVisible;
+        carousel.style.transform = 'translate3d(' + translateX + '%, 0, 0)'
         currentItem = index;
     }
 }
-
 
 async function createCarousel(htmlCategory, urlCategory) {
     let page = 1;
@@ -158,30 +154,3 @@ async function createCarousel(htmlCategory, urlCategory) {
     } while (currentMovie < 7);
     return sevenMovies
 }
-
-/*function createModal(addPicture, movieData) {
-
-    let myModal = document.getElementById("myModal")
-    let modal = document.getElementById("modal_content");
-    //let movieItem = document.getElementsByTagName("img");
-    addPicture.onclick = function(){
-        myModal.style.display = "block"
-        modal.innerHTML = `<h2 style="text-align: center">${movieData.title}</h2>
-                           <img><img src="${movieData.image_url}"</img>
-                           <p><strong>Genre: </strong>${movieData.gender}</p>
-                           <p><strong>Date de sortie: </strong>${movieData.date_published}</p>
-                           <p><strong>Note utilisateurs: </strong>${movieData.imdb_score}</p>
-                           <p><strong>Réalisateur: </strong>${movieData.writers}</p>
-                           <p><strong>acteurs: </strong>${movieData.actors}</p>
-                           <p><strong>synopsis: </strong>${movieData.actors}</p>`
-    }
-    let span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
-            myModal.style.display = "none"
-        }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            myModal.style.display = "none";
-        }
-    }
-}*/
