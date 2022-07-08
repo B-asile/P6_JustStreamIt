@@ -9,8 +9,8 @@ body {
 
 #bloc_page {
     width: 100%;
-    /*margin: auto;*/
-    margin-block: 15%;
+    margin: auto;
+    /*margin-block: 15%;*/
 }
 
 header {
@@ -54,17 +54,17 @@ a:hover {
 }
 
 header h1 {
-    display: inline;
-    font-size: xxx-large;
+    display: inline-block;
+    font-size: 500%;
     margin-top: 3rem;
     text-align: center;
-    padding-right: 50%;
+    /*padding-right: 50%;*/
     /*border: 2px inset orangered;*/
     margin-left: 10%;
     margin-right: 10%;
 }
 
-header h1::after {
+/*header h1::after {
     content: '';
     display: flex;
     justify-content: right;
@@ -73,7 +73,7 @@ header h1::after {
     background-color: orangered;
     top: 40%;
     right: 30%;
-}
+}*/
 
 header::after {
     content: '';
@@ -150,16 +150,15 @@ section {
     left: 10%;
     top: 10%;
     /*max-height: calc(90vw - 5px);*/
-    max-width: calc(100%/5);
-    background-color: rgba(0, 0, 0, 0.8);
+    max-width: calc(100%/4);
+    /*background-color: rgba(0, 0, 0, 0.8);*/
+    background-color: gainsboro;
+    border: 1px solid #888;
     height: 50%;
 }
 
 #modal_content {
     background-color: gainsboro;
-    border: 1px solid #888;
-   /* width: 90vw;
-    height: 90vw;*/
     overflow: auto;
    /* max-height: calc(100vw - 5px);*/
    /* max-width: calc(100%/6);*/
@@ -174,7 +173,6 @@ section {
     text-transform: uppercase;
     font-family: Arial, sans-serif;
     color: black;
-    margin-left: 0%;
 }
 
 #modal_content p {
@@ -219,27 +217,27 @@ section {
     margin: 3%;
 }
 
- button {
-     color: black;
-     font-weight: bold;
-     height: 35px;
-     width:35px;
-     border-radius: 50%;
-     text-align: center;
-     font-size: 20px;
-     border-color: black;
-     background-color: white;
-     opacity: 0.63;
-     font-family: sans-serif;
-     z-index: 3;
-     line-height: normal; /*hauteur de la boite ?*/
-     cursor: pointer;
-     transition: transform 0.3s;
+button {
+    color: black;
+    font-weight: bold;
+    height: 35px;
+    width:35px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 20px;
+    border-color: black;
+    background-color: white;
+    opacity: 0.63;
+    font-family: sans-serif;
+    z-index: 3;
+    line-height: normal;
+    cursor: pointer;
+    transition: transform 0.3s;
 }
 
- .prev:hover, .next:hover {
-     transform: scale(1.2);
- }
+.prev:hover, .next:hover {
+    transform: scale(1.2);
+}
 
 .prev {
     position: absolute;
@@ -284,4 +282,28 @@ section {
 .slider img:hover {
      transform: scale(1.2);
  }
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: black;
+    margin-top: 5%;
+    margin-right: 10%;
+    margin-left: 10%;
+    padding: 3%;
+}
+
+footer p {
+    text-align: center;
+    justify-content: center;
+    font-size: medium;
+    text-transform: uppercase;
+    font-family: "Comic Sans MS", sans-serif;
+    color: lightslategrey;
+    margin: 1%;
+}
+
 

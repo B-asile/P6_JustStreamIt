@@ -6,7 +6,6 @@ async function createModal(movieId) {
     fetch(baseUrl + movieId)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             let myModal = document.getElementById("myModal");
             myModal.style.display = "block"
             document.getElementById('modal_content').innerHTML = ` 
@@ -22,10 +21,9 @@ async function createModal(movieId) {
                 <p><strong>acteurs: </strong>${data.actors}</p>
                 <p><strong>synopsis: </strong>${data.long_description}</p>`
             let closed = document.getElementsByClassName("close")[0];
-            console.log(closed)
             closed.onclick = () => myModal.style.display = "none"
             window.onclick = function(event) {
-                if (event.target != myModal) {
+                if (event.target !== myModal) {
                     myModal.style.display = "none";
                 }
             }
@@ -92,8 +90,6 @@ function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
     let buttons = [].slice.call(carouselButtons.children);
     let nextButton = buttons[1];
     let prevButton = buttons[0];
-    //let nextButton = carouselButtons.getElementsByClassName( 'next');
-    //let prevButton = carouselButtons.getElementsByClassName( 'prev');
     nextButton.addEventListener('click', nextSlide);
     prevButton.addEventListener('click', prevSlide);
 
