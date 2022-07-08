@@ -1,29 +1,5 @@
 
 
-// récupérer les données des films depuis l'API http://localhost:8000/api/v1/ à l'aide dr requ^êtes Ajax
-// les afficher sur une interface web
-//la mise à jour des données doit se faire automatiquement
-// to do try-catch
-/*L’interface doit comprendre les zones suivantes :
-“Meilleur film” : Cette zone affiche la photo du film qui a la meilleure note Imdb toutes catégories confondues, ainsi que son titre, un bouton et le résumé du film sous le bouton.
-“Films les mieux notés” : Cette zone affiche les 7 autres films les mieux notés toutes catégories confondues. On pourra les faire défiler avec une flèche à gauche et à droite comme sur la maquette pour tous les parcourir.
-“Catégorie 1” : Montre les 7 films les mieux notés d’une catégorie donnée.
-“Catégorie 2” : Montre les 7 films les mieux notés d’une autre catégorie.
-“Catégorie 3” : Idem sur une autre catégorie !*/
-/*Lorsqu’on clique sur le bouton du film en vedette ou sur l’image d’un des films une fenêtre modale s’ouvre. Dans cette fenêtre les informations suivantes doivent être présente :
-//L’image de la pochette du film
-//Le Titre du film
-//Le genre complet du film
-//Sa date de sortie
-//Son Rated
-//Son score Imdb
-//Son réalisateur
-//La liste des acteurs
-//Sa durée
-//Le pays d’origine
-Le résultat au Box Office
-Le résumé du film*/
-
 const baseUrl = "http://localhost:8000/api/v1/titles/"
 
 async function createModal(movieId) {
@@ -33,22 +9,23 @@ async function createModal(movieId) {
             console.log(data)
             let myModal = document.getElementById("myModal");
             myModal.style.display = "block"
-            document.getElementById('modal_content').innerHTML = `
-                <h2 style="text-align: center">${data.title}</h2>
-                <img><img src="${data.image_url}"</img>
-                <p><strong>Genre: </strong>${data.genres}</p>
+            document.getElementById('modal_content').innerHTML = ` 
+                <h1 style="text-align: center">${data.title}</h1>
+                <img><img src="${data.image_url}"</img>                             
+                <p><strong>Genre: </strong>${data.genres}
+                <strong>  /  Durée: </strong>${data.duration}<strong>min</strong></p>
                 <p><strong>Date de sortie: </strong>${data.date_published}</p>
-                <p><strong>Durée: </strong>${data.duration}<strong>min</strong></p>
                 <p><strong>Note utilisateurs: </strong>${data.imdb_score}</p>
                 <p><strong>Rated: </strong>${data.rated}</p>
                 <p><strong>Réalisateur: </strong>${data.directors}</p>
                 <p><strong>Pays d'origine: </strong>${data.countries}</p>
                 <p><strong>acteurs: </strong>${data.actors}</p>
                 <p><strong>synopsis: </strong>${data.long_description}</p>`
-            let span = document.getElementsByClassName("close")[0];
-            span.onclick = () => myModal.style.display = "none"
+            let closed = document.getElementsByClassName("close")[0];
+            console.log(closed)
+            closed.onclick = () => myModal.style.display = "none"
             window.onclick = function(event) {
-                if (event.target == modal) {
+                if (event.target != myModal) {
                     myModal.style.display = "none";
                 }
             }
@@ -60,12 +37,17 @@ function bestMovie() {
         .then(response => {
             if(response.ok){
                 response.json().then(data => {
-                    const imgBestMovie = document.getElementsByClassName("imgBestMovie");
+                    let imgBestMovie = document.getElementById("movie");
                     let addPicture = document.createElement("img");
                     addPicture.src = data.results[0].image_url
                     movieId = data.results[0].id
-                    imgBestMovie[0].append(addPicture);
+                    imgBestMovie.append(addPicture);
                     addPicture.onclick = () => createModal(data.results[0].id)
+                    document.getElementById('infos').innerHTML = `
+                        <p style="text-align: center; font-size: xx-large"><strong>${data.results[0].title}</strong></p>
+                        <p style="text-align: center"><strong>Genre: </strong><strong>${data.results[0].genres}</strong></p>
+                        <p style="text-align: center"><strong>Auteur: </strong><strong>${data.results[0].writers}</strong></p>
+                        <p style="text-align: center"><strong>Note: </strong><strong>${data.results[0].imdb_score}</strong></p>`;
                 })
             }else {
                 console.log("erreur");
@@ -154,3 +136,4 @@ async function createCarousel(htmlCategory, urlCategory) {
     } while (currentMovie < 7);
     return sevenMovies
 }
+
