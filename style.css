@@ -71,7 +71,7 @@ header::after {
 
 }
 
-h1 {
+h2 {
     font-family: Impact, sans-serif;
     font-size: xx-large;
     color: orangered;
@@ -94,7 +94,7 @@ section {
     padding: 8%;
 }
 
-.bestMovie h1::after {
+.bestMovie h2::after {
     content: '';
     display: flex;
     justify-content: left;
@@ -284,7 +284,7 @@ footer p {
     justify-content: center;
     font-size: medium;
     text-transform: uppercase;
-    font-family: Georgia, sans-serif;
+    font-family: "Arial Hebrew", sans-serif;
     color: lightslategrey;
     margin: 1%;
 }
