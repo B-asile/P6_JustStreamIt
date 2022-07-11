@@ -9,5 +9,9 @@ Projet OpenClassRooms : développeer une interface utilisateur pour une applicat
 
 ## Installer l'API: OCMovies-API.  
 
-1. rendez-vous sur: `https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR`.  
+Rendez-vous sur: `https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR`.  
 et suivre les instructions d'installation.  
+
+## Visualiser l'interface:  
+
+Ouvrir le fichier html du projet `new_file.html` dans un navigateur.
