@@ -3,6 +3,7 @@
 const baseUrl = "http://localhost:8000/api/v1/titles/"
 
 async function createModal(movieId) {
+    //creation modal//
     fetch(baseUrl + movieId)
         .then(response => response.json())
         .then(data => {
@@ -31,6 +32,7 @@ async function createModal(movieId) {
 }
 
 function bestMovie() {
+    //implémentation données pour best movie//
     fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
         .then(response => {
             if(response.ok){
@@ -41,11 +43,15 @@ function bestMovie() {
                     movieId = data.results[0].id
                     imgBestMovie.append(addPicture);
                     addPicture.onclick = () => createModal(data.results[0].id)
-                    document.getElementById('infos').innerHTML = `
-                        <p style="text-align: center; font-size: xx-large"><strong>${data.results[0].title}</strong></p>
-                        <p style="text-align: center"><strong>Genre: </strong><strong>${data.results[0].genres}</strong></p>
-                        <p style="text-align: center"><strong>Auteur: </strong><strong>${data.results[0].writers}</strong></p>
-                        <p style="text-align: center"><strong>Note: </strong><strong>${data.results[0].imdb_score}</strong></p>`;
+                    fetch(baseUrl + movieId)
+                    .then(response => response.json())
+                        .then(bestMovieInfos => {
+                            console.log(bestMovieInfos)
+                            document.getElementById('infos').innerHTML = `
+                        <p style="text-align: center; font-size: xx-large"><strong>${bestMovieInfos.title}</strong></p>
+                        <p style="text-align: center"><strong>${bestMovieInfos.long_description}</strong></p>
+                        <p style="text-align: center"><strong>Note: </strong><strong>${bestMovieInfos.imdb_score}</strong></p>`;
+                        })
                 })
             }else {
                 console.log("erreur");
@@ -55,6 +61,7 @@ function bestMovie() {
 bestMovie()
 
 function createCategory(htmlCategory, urlCategory, ButtonsCategory) {
+    //Création categories pour implémentation dans le html et interrogation API//
     let sevenMovies = createCarousel(htmlCategory, urlCategory);
     sevenMovies.then(movies => {
         carouselAnimation(htmlCategory, movies, ButtonsCategory)
@@ -66,6 +73,7 @@ createCategory("ComedyCategory", "Comedy", "buttons_ComedyCategory")
 createCategory("SF_Category", "Sci-Fi", "buttons_SF_Category")
 
 function addMoviesInCarousel(movieData, htmlCategory) {
+    //affichage des image films//
     let carouselContent = document.getElementById(htmlCategory);
     let addPicture = document.createElement("img");
     addPicture.src = movieData.image_url;
@@ -75,6 +83,7 @@ function addMoviesInCarousel(movieData, htmlCategory) {
 }
 
 function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
+    //animation des carrousels//
     slideVisible = 5;
     slideToScroll = 1;
     currentItem = 0;
@@ -112,6 +121,7 @@ function carouselAnimation(htmlCategory, sevenMovies, ButtonsCategory) {
 }
 
 async function createCarousel(htmlCategory, urlCategory) {
+    //Récupération des 7 meilleurs films pour chaques catégories données//
     let page = 1;
     let currentMovie = 0;
     let sevenMovies = [];
